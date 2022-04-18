@@ -23,11 +23,10 @@ class PageController extends Controller
 
     public function tour(Post $post){
         //Show a tour
-        // $allPosts = Post::with('user')->count();
-        // dd($allPosts);
-        return view('tour' , [
-            // 'post' => $post, 'allPosts' => $allPosts
-        ]);
+        return Inertia::render('Admin/Show', [
+            'post' => $post,
+            'goBack' => 'tours'
+        ]); 
     }
 
     //-------SERVICIOS--------
@@ -45,11 +44,10 @@ class PageController extends Controller
 
     public function service(Post $post){
         //Show a service
-        // $allPosts = Post::with('user')->count();
-        // dd($allPosts);
-        return view('service' , [
-            // 'post' => $post, 'allPosts' => $allPosts
-        ]);
+        return Inertia::render('Admin/Show', [
+            'post' => $post,
+            'goBack' => 'servicies'
+        ]); 
     }
 
     public function CreateServicies(Post $post){

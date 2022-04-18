@@ -90,7 +90,7 @@ import Welcome from '@/Jetstream/Welcome.vue';
                                                 {{ post.title }}
                                             </th>
                                             <td class="px-6 py-4 text-right">
-                                                <Link :href="route('posts.show', post.id )" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show</Link>
+                                                <Link :href="route('service', post.slug)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show</Link>
                                             </td>
                                             <td class="px-6 py-4 text-right">
                                                 <Link :href="route('posts.edit', post.id )" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>

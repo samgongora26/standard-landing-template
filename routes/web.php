@@ -34,13 +34,13 @@ Route::get('/', function () {
 // Route::resource('/tours', PageController::class)
 //     ->except('show');
 Route::get('/tours', [PageController::class, 'tours'])->name('tours');
-Route::get('/tour', [PageController::class, 'tour'])->name('tour');
+Route::get('/tour/{post:slug}', [PageController::class, 'tour'])->name('tour');
 
 //Posts servicies
 // Route::resource('/servicies', PostController::class)
 //     ->except('show');
 Route::get('/servicies', [PageController::class, 'servicies'])->name('servicies');
-Route::get('/service', [PageController::class, 'service'])->name('service');
+Route::get('/service/{post:slug}', [PageController::class, 'service'])->name('service');
 // Route::get('/createServices', [PageController::class, 'CreateServicies'])->name('CreateServicies');
 
 //----------ADMIN---------
