@@ -39,13 +39,14 @@ Route::get('/tour', [PageController::class, 'tour'])->name('tour');
 //Posts servicies
 // Route::resource('/servicies', PostController::class)
 //     ->except('show');
-Route::get('/servicies', [PageController::class, 'tours'])->name('servicies');
-Route::get('/service', [PageController::class, 'tour'])->name('service');
+Route::get('/servicies', [PageController::class, 'servicies'])->name('servicies');
+Route::get('/service', [PageController::class, 'service'])->name('service');
+// Route::get('/createServices', [PageController::class, 'CreateServicies'])->name('CreateServicies');
 
 //----------ADMIN---------
 //CRUD de posts
-Route::resource('/posts', AdminController::class)
-    ->middleware('auth');
+Route::resource('posts', AdminController::class)
+    ->middleware('auth:sanctum');
 
 
 Route::middleware([

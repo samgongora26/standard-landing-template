@@ -1,10 +1,9 @@
 <script setup>
-
+import AppLayout from '@/Layouts/AppLayout.vue';
+import Welcome from '@/Jetstream/Welcome.vue';
 </script>
 
 <script>
-    import AppLayout from '@/Layouts/AppLayout.vue';
-    import Welcome from '@/Jetstream/Welcome.vue';
     export default{
         components:{
             AppLayout,
@@ -31,7 +30,7 @@
     <AppLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Módulo de Tours
+                Módulo de Servicios
             </h2>
         </template>
 
@@ -40,19 +39,12 @@
                 <div class="md:grid md:grid-cols-3 md:gap-6">
                     <div class="md:col-span-1">
                         <div class="px-4 sm:px0">
-                            <h3 class="text-lg text-gray-900 ">Listado de tours</h3>
+                            <h3 class="text-lg text-gray-900 ">Listado de servicios</h3>
                             <p class="text-sm text-gray-600 ">Toma el registro correcto y ejecuta cualquier función (ver, editar o eliminar)</p>
                         </div>
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
                         <div class="mx:rounded-md p-4">
-                            <!-- <div class="flex justify-between">
-                                <Link :href="route('posts.create')" class="bg-blue-500 text-white font-bold py-2 px-4 my-3 mb-2 rounded-md">
-                                    Crear tour
-                                </Link>
-                                <input v-model="q" type="text" class="form-input rounded-md shadow-sm" placeholder="Buscar...">
-
-                            </div> -->
 
                             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                                 <div class="flex justify-between">
@@ -67,7 +59,7 @@
                                     <div class="p-4">
                                         <div class="relative mt-1">
                                             <Link :href="route('posts.create')" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 flex align-center">
-                                                Crear tour
+                                                Crear servicio
                                             </Link>
                                         </div>
                                     </div>
@@ -106,26 +98,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <!-- <pagination class="mt-6" :links="posts.links" /> -->
                             </div>
-
-                            <!-- <table class="my-3">
-                                <tr v-for="post in posts" :key="post.id" class="">
-                                    <td class="border px-4 py-2">
-                                        {{ post.title }}
-                                    </td>
-                                    <td class="px-4 py-2">
-                                        <Link :href="route('posts.show', posts )" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                            View 
-                                        </Link>
-                                    </td>
-                                    <td class="px-4 py-2">
-                                        <Link :href="route('posts.edit', posts )" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                            Editar
-                                        </Link>
-                                    </td>
-                                </tr>
-                            </table> -->
                         </div>
                     </div>
                 </div>

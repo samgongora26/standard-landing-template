@@ -15,7 +15,7 @@ class PostFactory extends Factory
     {
         return [
             'user_id'   => 1,
-            'category_id' => 1,
+            'category_id' => 2,
             'title'     => $this->faker->sentence,
             'body'      => $this->faker->text(800),
             'price'      => null,
