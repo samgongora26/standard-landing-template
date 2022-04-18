@@ -45,8 +45,7 @@ Route::get('/service', [PageController::class, 'tour'])->name('service');
 //----------ADMIN---------
 //CRUD de posts
 Route::resource('/posts', AdminController::class)
-    ->middleware('auth')
-    ->except('show');
+    ->middleware('auth');
 
 
 Route::middleware([

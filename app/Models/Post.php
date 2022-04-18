@@ -17,6 +17,7 @@ class Post extends Model
         'body',
         'iframe',
         'image',
+        'price',
         'user_id',
     ];
 
@@ -33,5 +34,13 @@ class Post extends Model
                 'onUpdate' => true , 
             ]
         ];
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function getGetExcerptAttribute(){
+        return substr($this->body, 0, 140);
     }
 }

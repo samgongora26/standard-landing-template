@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use App\Models\Post;
+
 
 class PageController extends Controller
 {
     //-------TOURS--------
-    public function tours(){
-        return view('tours',[
-            // 'posts' => Post::with('user')->latest()->paginate()
+    public function tours(Request $requests){
+        return Inertia::render('Admin/Tours', [
+            'posts' => Post::latest()
+                ->where('category_id', '=', "1")
+                ->get()
         ]);
     }
 

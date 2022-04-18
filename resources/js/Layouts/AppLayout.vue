@@ -52,8 +52,11 @@ const logout = () => {
                                 <JetNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </JetNavLink>
-                                <JetNavLink :href="route('tours')" :active="route().current('tours')">
+                                <JetNavLink :href="route('tours')" :active="route().current('tours.*')">
                                     Tours
+                                </JetNavLink>
+                                <JetNavLink :href="route('servicies')" :active="route().current('servicies.*')">
+                                    Servicies
                                 </JetNavLink>
                             </div>
                         </div>
@@ -213,6 +216,12 @@ const logout = () => {
                     <div class="pt-2 pb-3 space-y-1">
                         <JetResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </JetResponsiveNavLink>
+                        <JetResponsiveNavLink :href="route('tours')" :active="route().current('tours')">
+                            Tours
+                        </JetResponsiveNavLink>
+                        <JetResponsiveNavLink :href="route('servicies')" :active="route().current('servicies')">
+                            Servicies
                         </JetResponsiveNavLink>
                     </div>
 
