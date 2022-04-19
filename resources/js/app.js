@@ -3,8 +3,10 @@ require('./bootstrap');
 import { createApp, h } from 'vue';
 import { createInertiaApp, Head, Link  } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
-
-const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
+// idk where get the appName so, let's name it 
+// const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
+//Change this line with the AppName
+const appName = 'Template';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

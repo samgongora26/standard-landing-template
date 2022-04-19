@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+// Para renderizar vue
 use Inertia\Inertia;
+// Modelo de los posts
 use App\Models\Post;
 
 class PostController extends Controller
@@ -26,7 +28,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        //Renderiza la vista de crear
+        return Inertia::render('Admin/Create');
     }
 
     /**
@@ -58,9 +61,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return Inertia::render('Admin/Edit', [
+            'post' => $post,
+            'goBack' => 'servicies'
+        ]); 
     }
 
     /**
