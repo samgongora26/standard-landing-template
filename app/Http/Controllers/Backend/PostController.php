@@ -40,7 +40,28 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $request->validate([
+            'category_id' => 'required',
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+        // $imageName = time().'.'.$request->image->extension();  
+            
+        // $request->image->move(public_path('images'), $imageName);
+            
+        //Salvar con el id de usuario
+        $post = Post::create([
+            "user_id" => auth()->user()->id
+            //obtener el campo user_id de post ||lo buscamos en autenticados/usuarios/id
+        ]+ $request->all() );
+
+        if($request->file("image")){
+            $post->image= $request->file("image")->store("posts","public");
+            $post->save();
+        }
+
+        return redirect()->route('posts.edit',  $post->id)->with('status','Post agregado');
     }
 
     /**
@@ -76,9 +97,24 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'category_id' => 'required',
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+
+        $post->update($request->all());
+
+        if($request->file('file')){
+            if($post->image){
+                Storage::disk('public')->delete($post->image);
+            }
+            
+            $post->image = $request->file('file')->store('posts', 'public');
+            $post->save();
+        }
     }
 
     /**

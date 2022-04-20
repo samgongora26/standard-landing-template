@@ -25,7 +25,11 @@ import Welcome from '@/Jetstream/Welcome.vue';
                     <div class="md:col-span-2 mt-5 md:mt-0">
                         <div class="mx:rounded-md p-4">
                             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                                <form class="bg-white border-b  hover:bg-gray-50 p-4">
+                                <form 
+                                    @submit.prevent="submit" 
+                                    class="bg-white border-b  hover:bg-gray-50 p-4"
+                                    enctype="multipart/form-data"
+                                    method="POST">
                                     <div class="mb-6">
                                         <label 
                                             for="category" 
@@ -35,7 +39,7 @@ import Welcome from '@/Jetstream/Welcome.vue';
                                         <select 
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                             required
-                                            v-model="form.category"
+                                            v-model="form.category_id"
                                         >
                                             <option selected value="1">Tours</option>
                                             <option value="2">Servicies</option>
@@ -62,7 +66,7 @@ import Welcome from '@/Jetstream/Welcome.vue';
                                         <input class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer "
                                             aria-describedby="user_avatar_help" 
                                             type="file"
-                                            @change="onFileChange"
+                                            @change="previewImage"
                                         >
                                     </div>
                                     <div class="mb-6">
@@ -75,7 +79,8 @@ import Welcome from '@/Jetstream/Welcome.vue';
                                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                             rows="4" 
                                             placeholder="Leave a comment..."
-                                            required>
+                                            required
+                                            v-model="form.body">
                                         </textarea>
                                     </div>
                                     <div class="mb-6">
@@ -87,7 +92,8 @@ import Welcome from '@/Jetstream/Welcome.vue';
                                         <textarea
                                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                             rows="2" 
-                                            placeholder="">
+                                            placeholder=""
+                                            v-model="form.iframe">
                                         </textarea>
                                     </div>
                                     <div class="mb-">
@@ -122,7 +128,7 @@ import Welcome from '@/Jetstream/Welcome.vue';
             return {
                 form: {
                     title: '',
-                    category : '',
+                    category_id : '',
                     image : '',
                     body : '',
                     price : '',
@@ -153,7 +159,30 @@ import Welcome from '@/Jetstream/Welcome.vue';
             },
             removeImage: function (e) {
                 this.form.image = '';
+            },
+
+            previewImage: function(event) {
+            // Reference to the DOM input element
+            var input = event.target;
+            this.form.image = input.files[0];
+
+            // Ensure that you have a file before attempting to read it
+            if (input.files && input.files[0]) {
+                // create a new FileReader to read this image and convert to base64 format
+                var reader = new FileReader();
+                // Define a callback function to run, when FileReader finishes its job
+                reader.onload = (e) => {
+                    // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+                    // Read image as base64 and set to imageData
+                    // this.form.image = e.target.result;
+                    this.form.image = input.files[0];
+                }
+                // Start the reader job - read file as a data url (base64 format)
+                reader.readAsDataURL(input.files[0]);
+                // console.log(reader);
+                // this.form.image = input.files[0];
             }
+        }
         }
     }
 </script>

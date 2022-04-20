@@ -14,11 +14,12 @@ class Post extends Model
 
     protected $fillable = [
         'title',
-        'body',
-        'iframe',
         'image',
+        'body',
         'price',
+        'iframe',
         'user_id',
+        'category_id',
     ];
 
     /**
@@ -42,5 +43,11 @@ class Post extends Model
 
     public function getGetExcerptAttribute(){
         return substr($this->body, 0, 140);
+    }
+
+    public function getGetImageAttribute(){
+        if($this->image){
+            return url("storage/$this->image");
+        }
     }
 }
