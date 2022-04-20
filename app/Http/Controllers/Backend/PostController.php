@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 // Modelo de los posts
 use App\Models\Post;
+use App\Http\Requests\Post as PostRequest;
 
 class PostController extends Controller
 {
@@ -38,14 +39,14 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         // dd($request);
-        $request->validate([
-            'category_id' => 'required',
-            'title' => 'required',
-            'body' => 'required',
-        ]);
+        // $request->validate([
+        //     'category_id' => 'required',
+        //     'title' => 'required',
+        //     'body' => 'required',
+        // ]);
         // $imageName = time().'.'.$request->image->extension();  
             
         // $request->image->move(public_path('images'), $imageName);
@@ -62,6 +63,7 @@ class PostController extends Controller
         }
 
         return redirect()->route('posts.edit',  $post->id)->with('status','Post agregado');
+            // ->withErrors(['email' => 'User with given e-mail already exists']);
     }
 
     /**
@@ -97,24 +99,20 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
-        $request->validate([
-            'category_id' => 'required',
-            'title' => 'required',
-            'body' => 'required',
-        ]);
 
-        $post->update($request->all());
+        // $post->update($request->all());
 
         if($request->file('file')){
             if($post->image){
                 Storage::disk('public')->delete($post->image);
             }
-            
+
             $post->image = $request->file('file')->store('posts', 'public');
             $post->save();
         }
+        return redirect()->route('posts.edit',  $post->id);
     }
 
     /**

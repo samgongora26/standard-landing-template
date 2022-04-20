@@ -96,9 +96,17 @@ import Welcome from '@/Jetstream/Welcome.vue';
                                             v-model="form.iframe">
                                         </textarea>
                                     </div>
-                                    <div class="mb-">
-                                        <label for="">Imagen</label>
-                                        <img :src="form.image" alt="" @click="removeImage">
+                                    <div class="mb-6">
+                                        <label 
+                                            for="title" 
+                                            class="block mb-2 text-sm font-medium text-gray-900">
+                                            Price
+                                        </label>
+                                        <input 
+                                            v-model="form.price"
+                                            type="text" 
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                                            >
                                     </div>
 
                                     <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Submit</button>
@@ -162,27 +170,27 @@ import Welcome from '@/Jetstream/Welcome.vue';
             },
 
             previewImage: function(event) {
-            // Reference to the DOM input element
-            var input = event.target;
-            this.form.image = input.files[0];
+                // Reference to the DOM input element
+                var input = event.target;
+                this.form.image = input.files[0];
 
-            // Ensure that you have a file before attempting to read it
-            if (input.files && input.files[0]) {
-                // create a new FileReader to read this image and convert to base64 format
-                var reader = new FileReader();
-                // Define a callback function to run, when FileReader finishes its job
-                reader.onload = (e) => {
-                    // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
-                    // Read image as base64 and set to imageData
-                    // this.form.image = e.target.result;
-                    this.form.image = input.files[0];
+                // Ensure that you have a file before attempting to read it
+                if (input.files && input.files[0]) {
+                    // create a new FileReader to read this image and convert to base64 format
+                    var reader = new FileReader();
+                    // Define a callback function to run, when FileReader finishes its job
+                    reader.onload = (e) => {
+                        // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+                        // Read image as base64 and set to imageData
+                        // this.form.image = e.target.result;
+                        this.form.image = input.files[0];
+                    }
+                    // Start the reader job - read file as a data url (base64 format)
+                    reader.readAsDataURL(input.files[0]);
+                    // console.log(reader);
+                    // this.form.image = input.files[0];
                 }
-                // Start the reader job - read file as a data url (base64 format)
-                reader.readAsDataURL(input.files[0]);
-                // console.log(reader);
-                // this.form.image = input.files[0];
             }
-        }
-        }
+        },
     }
 </script>

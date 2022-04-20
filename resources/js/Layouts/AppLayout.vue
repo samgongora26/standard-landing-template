@@ -316,6 +316,18 @@ const logout = () => {
 
             <!-- Page Content -->
             <main>
+                <div v-if="$page.props.flash.status"  class="bg-blue-500 text-white text-sm font-bold p-4">
+                    <p> {{ $page.props.flash.status }}</p>
+                    <span @click="$page.props.flash.message = false">
+                        Cerrar
+                    </span>
+                </div>
+                <div v-if="$page.props.flash.errors"  class="bg-red-500 text-white text-sm font-bold p-4">
+                    <p> {{ $page.props.flash.errors }}</p>
+                    <span @click="$page.props.flash.errors = false">
+                        Cerrar
+                    </span>
+                </div>
                 <slot />
             </main>
         </div>
