@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Jetstream/Welcome.vue';
+import { useForm } from '@inertiajs/inertia-vue3';
 </script>
 
 <script>
@@ -13,21 +14,34 @@ import Welcome from '@/Jetstream/Welcome.vue';
             goBack : String,
             errors: Object,
         },
+        setup () {
+            
+        },
         data(){
             return {
-                form: {
+                // form: {
+                //     title: this.post.title,
+                //     category_id : this.post.category_id,
+                //     image : this.post.image,
+                //     body : this.post.body,
+                //     price : this.post.price,
+                //     iframe : this.post.iframe,
+                // }
+                form : useForm({
                     title: this.post.title,
                     category_id : this.post.category_id,
                     image : this.post.image,
                     body : this.post.body,
                     price : this.post.price,
                     iframe : this.post.iframe,
-                }
+                })
             }
         },
         methods:{
             submit(){
-                this.$inertia.put(this.route('posts.update', this.post.id), this.form)
+                console.log(this.form);
+                // this.$inertia.put(this.route('posts.update', this.post), this.form)
+                this.form.put(this.route('posts.update', this.post), this.form)
             },
             removeImage: function (e) {
                 this.form.image = '';
@@ -36,6 +50,7 @@ import Welcome from '@/Jetstream/Welcome.vue';
                 // Reference to the DOM input element
                 var input = event.target;
                 this.form.image = input.files[0];
+                console.log(this.form);
                 // Ensure that you have a file before attempting to read it
                 if (input.files && input.files[0]) {
                     // create a new FileReader to read this image and convert to base64 format
@@ -53,13 +68,7 @@ import Welcome from '@/Jetstream/Welcome.vue';
                     // this.form.image = input.files[0];
                 }
             },
-            displayErrors(){
-                console.log(this.errors);
-            }
         },
-        created(){
-            this.displayErrors();
-        }
     }
 </script>
 
@@ -78,7 +87,8 @@ import Welcome from '@/Jetstream/Welcome.vue';
                     <div class="md:col-span-1">
                         <div class="px-4 sm:px0">
                             <h3 class="text-lg text-gray-900 ">Crea una publicación</h3>
-                            <p class="text-sm text-gray-600 ">La publicación será guardada en la categoría que elija</p>
+                            <p class="text-sm text-gray-600 ">{{ post.title }}</p>
+                            <small class="text-sm text-gray-500 ">Recuerda no repetir el nombre y rellenar los campos obligatorios.</small>
                         </div>
                     </div>
 
@@ -87,14 +97,12 @@ import Welcome from '@/Jetstream/Welcome.vue';
                             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                                 <form 
                                     @submit.prevent="submit" 
-                                    class="bg-white border-b  hover:bg-gray-50 p-4"
-                                    enctype="multipart/form-data"
-                                    method="POST">
+                                    class="bg-white border-b  hover:bg-gray-50 p-4">
                                     <div class="mb-6">
                                         <label 
                                             for="category" 
                                             class="block mb-2 text-sm font-medium text-gray-900">
-                                            Category
+                                            Category <span class="text-red-500">*</span>
                                         </label>
                                         <select 
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -109,7 +117,7 @@ import Welcome from '@/Jetstream/Welcome.vue';
                                         <label 
                                             for="title" 
                                             class="block mb-2 text-sm font-medium text-gray-900">
-                                            Title
+                                            Title <span class="text-red-500">*</span>
                                         </label>
                                         <input 
                                             v-model="form.title"
@@ -120,20 +128,8 @@ import Welcome from '@/Jetstream/Welcome.vue';
                                     <div class="mb-6">
                                         <label 
                                             class="block mb-2 text-sm font-medium text-gray-900"
-                                            for="image">
-                                            Image
-                                        </label>
-                                        <input class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer "
-                                            aria-describedby="user_avatar_help" 
-                                            type="file"
-                                            @change="previewImage"
-                                        >
-                                    </div>
-                                    <div class="mb-6">
-                                        <label 
-                                            class="block mb-2 text-sm font-medium text-gray-900"
                                             for="description">
-                                            Description
+                                            Description <span class="text-red-500">*</span>
                                         </label>
                                         <textarea
                                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
@@ -141,19 +137,6 @@ import Welcome from '@/Jetstream/Welcome.vue';
                                             placeholder="Leave a comment..."
                                             required
                                             v-model="form.body">
-                                        </textarea>
-                                    </div>
-                                    <div class="mb-6">
-                                        <label 
-                                            class="block mb-2 text-sm font-medium text-gray-900"
-                                            for="embed">
-                                            Embed
-                                        </label>
-                                        <textarea
-                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                            rows="2" 
-                                            placeholder=""
-                                            v-model="form.iframe">
                                         </textarea>
                                     </div>
                                     <div class="mb-6">
@@ -168,6 +151,32 @@ import Welcome from '@/Jetstream/Welcome.vue';
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
                                             >
                                     </div>
+                                    <div class="mb-6">
+                                        <label 
+                                            class="block mb-2 text-sm font-medium text-gray-900"
+                                            for="image">
+                                            Image
+                                        </label>
+                                        <input class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer "
+                                            aria-describedby="user_avatar_help" 
+                                            type="file"
+                                            @input="form.image = $event.target.files[0]"
+                                        >
+                                    </div>
+                                    <div class="mb-6">
+                                        <label 
+                                            class="block mb-2 text-sm font-medium text-gray-900"
+                                            for="embed">
+                                            Embed
+                                        </label>
+                                        <textarea
+                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                            rows="2" 
+                                            placeholder=""
+                                            v-model="form.iframe">
+                                        </textarea>
+                                    </div>
+                                    
 
                                     <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Submit</button>
                                 </form>

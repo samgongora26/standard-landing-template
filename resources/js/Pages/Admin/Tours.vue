@@ -18,11 +18,11 @@
                 // post: this.tours,
             }
         },
-        // watch :{
-        //     q: function (value){
-        //         this.$inertia.get(this.route('notes.index', {q: value}), {}, {preserveState: true})
-        //     }
-        // }
+        watch :{
+            q: function (value){
+                this.$inertia.get(this.route('notes.index', {q: value}), {}, {preserveState: true})
+            }
+        }
     }
 </script>
 
@@ -46,29 +46,15 @@
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
                         <div class="mx:rounded-md p-4">
-                            <!-- <div class="flex justify-between">
-                                <Link :href="route('posts.create')" class="bg-blue-500 text-white font-bold py-2 px-4 my-3 mb-2 rounded-md">
-                                    Crear tour
-                                </Link>
-                                <input v-model="q" type="text" class="form-input rounded-md shadow-sm" placeholder="Buscar...">
-
-                            </div> -->
 
                             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                                <div class="flex justify-between">
+                                <div class="flex justify-end bg-neutral-200">
                                     <div class="p-4">
                                         <div class="relative mt-1">
                                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                                 <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                                             </div>
-                                            <input v-model="q" type="text" id="table-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5  " placeholder="Search for items">
-                                        </div>
-                                    </div>
-                                    <div class="p-4">
-                                        <div class="relative mt-1">
-                                            <!-- <Link :href="route('posts.create')" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 flex align-center">
-                                                Crear tour
-                                            </Link> -->
+                                            <input v-model="q" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5  " placeholder="Search for items">
                                         </div>
                                     </div>
                                 </div>

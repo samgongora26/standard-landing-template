@@ -9,6 +9,7 @@ use Inertia\Inertia;
 // Modelo de los posts
 use App\Models\Post;
 use App\Http\Requests\Post as PostRequest;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PostController extends Controller
 {
@@ -109,6 +110,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        // dd($request);
         //Si no tiene el mismo nombre valida que no este repetido
         if($post->title != $request->title){
             $request->validate(
@@ -121,7 +123,7 @@ class PostController extends Controller
                 [
                     'category_id.required' => 'No ha seleccionado una categoría',
                     'title.unique' => 'El título ya está registrado',
-                    'body.unique' => 'La descripción no puede quedar vacío',
+                    'body.required' => 'La descripción no puede quedar vacío',
                 ]
             );
         }
@@ -135,19 +137,18 @@ class PostController extends Controller
                 //Custom errors
                 [
                     'category_id.required' => 'No ha seleccionado una categoría',
-                    'body.unique' => 'La descripción no puede quedar vacío',
+                    'body.required' => 'La descripción no puede quedar vacío',
                 ]
             );
-        }
-        // $post->update($request->all());
+        } 
+        //Actualiza la publicacion
+        $post->update($request->all());
+        //Verifica si trae una imagen
         if($request->file('file')){
-            if($post->image){
-                //Si tiene una imagen guardada eliminalo
-                Storage::disk('public')->delete($post->image);
-            }
+            // Storage::disk('public')->delete($post->image);
             $post->image = $request->file('file')->store('posts', 'public');
             $post->save();
-        } 
+        }
         return redirect()->route('posts.edit',  $post->id)->with('status','Post editado correctamente');
     }
 
