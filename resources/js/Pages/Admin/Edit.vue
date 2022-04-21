@@ -2,6 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Jetstream/Welcome.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
+import { Inertia } from '@inertiajs/inertia';
 </script>
 
 <script>
@@ -30,7 +31,7 @@ import { useForm } from '@inertiajs/inertia-vue3';
                 form : useForm({
                     title: this.post.title,
                     category_id : this.post.category_id,
-                    image : this.post.image,
+                    image : '',
                     body : this.post.body,
                     price : this.post.price,
                     iframe : this.post.iframe,
@@ -41,7 +42,18 @@ import { useForm } from '@inertiajs/inertia-vue3';
             submit(){
                 console.log(this.form);
                 // this.$inertia.put(this.route('posts.update', this.post), this.form)
-                this.form.put(this.route('posts.update', this.post), this.form)
+                // this.form.put(this.route('posts.update', this.post), this.form)
+                Inertia.post(`/posts/${this.post.id}`,{
+                    _method : 'put',
+                    form    : this.form,
+                    post    : this.post,
+                    title   : this.form.title,
+                    category_id : this.form.category_id,
+                    image   : this.form.image,
+                    body    : this.form.body,
+                    price   : this.form.price,
+                    iframe  : this.form.iframe,
+                })
             },
             removeImage: function (e) {
                 this.form.image = '';
@@ -160,7 +172,7 @@ import { useForm } from '@inertiajs/inertia-vue3';
                                         <input class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer "
                                             aria-describedby="user_avatar_help" 
                                             type="file"
-                                            @input="form.image = $event.target.files[0]"
+                                            @change="previewImage"
                                         >
                                     </div>
                                     <div class="mb-6">

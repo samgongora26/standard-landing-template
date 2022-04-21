@@ -20783,8 +20783,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout.vue */ "./resources/js/Layouts/AppLayout.vue");
-/* harmony import */ var _Jetstream_Welcome_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/Welcome.vue */ "./resources/js/Jetstream/Welcome.vue");
+/* harmony import */ var _Jetstream_Welcome_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Jetstream/Welcome.vue */ "./resources/js/Jetstream/Welcome.vue");
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
 var __default__ = {
   components: {
     AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -20808,7 +20809,7 @@ var __default__ = {
       form: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.useForm)({
         title: this.post.title,
         category_id: this.post.category_id,
-        image: this.post.image,
+        image: '',
         body: this.post.body,
         price: this.post.price,
         iframe: this.post.iframe
@@ -20818,8 +20819,19 @@ var __default__ = {
   methods: {
     submit: function submit() {
       console.log(this.form); // this.$inertia.put(this.route('posts.update', this.post), this.form)
+      // this.form.put(this.route('posts.update', this.post), this.form)
 
-      this.form.put(this.route('posts.update', this.post), this.form);
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post("/posts/".concat(this.post.id), {
+        _method: 'put',
+        form: this.form,
+        post: this.post,
+        title: this.form.title,
+        category_id: this.form.category_id,
+        image: this.form.image,
+        body: this.form.body,
+        price: this.form.price,
+        iframe: this.form.iframe
+      });
     },
     removeImage: function removeImage(e) {
       this.form.image = '';
@@ -20853,14 +20865,16 @@ var __default__ = {
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/Object.assign(__default__, {
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
     var __returned__ = {
       AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-      Welcome: _Jetstream_Welcome_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-      useForm: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.useForm
+      Welcome: _Jetstream_Welcome_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      useForm: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.useForm,
+      Inertia: _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -25070,8 +25084,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer",
         "aria-describedby": "user_avatar_help",
         type: "file",
-        onInput: _cache[4] || (_cache[4] = function ($event) {
-          return $data.form.image = $event.target.files[0];
+        onChange: _cache[4] || (_cache[4] = function () {
+          return $options.previewImage && $options.previewImage.apply($options, arguments);
         })
       }, null, 32
       /* HYDRATE_EVENTS */

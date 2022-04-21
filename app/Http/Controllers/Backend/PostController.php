@@ -10,6 +10,7 @@ use Inertia\Inertia;
 use App\Models\Post;
 use App\Http\Requests\Post as PostRequest;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -142,11 +143,21 @@ class PostController extends Controller
             );
         } 
         //Actualiza la publicacion
+        $image = $request->image;
+        // dd($image);
         $post->update($request->all());
+        // $post->update([
+        //     'category_id' => Request::input('category_id'),
+        //     'title' => Request::input('title'),
+        //     'body' => Request::input('body'),
+        //     'image' => $image,
+        //     'price' => Request::input('price'),
+        //     'iframe' => Request::input('iframe'),
+        // ]);
         //Verifica si trae una imagen
-        if($request->file('file')){
-            // Storage::disk('public')->delete($post->image);
-            $post->image = $request->file('file')->store('posts', 'public');
+        if($image){
+            Storage::disk('public')->delete($post->image);
+            $post->image = $image->store('posts', 'public');
             $post->save();
         }
         return redirect()->route('posts.edit',  $post->id)->with('status','Post editado correctamente');
