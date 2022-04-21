@@ -58,9 +58,9 @@ import Welcome from '@/Jetstream/Welcome.vue';
                                     </div>
                                     <div class="p-4">
                                         <div class="relative mt-1">
-                                            <Link :href="route('posts.create')" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 flex align-center">
+                                            <!-- <Link :href="route('posts.create')" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 flex align-center">
                                                 Crear servicio
-                                            </Link>
+                                            </Link> -->
                                         </div>
                                     </div>
                                 </div>

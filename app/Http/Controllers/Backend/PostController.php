@@ -35,18 +35,26 @@ class PostController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     * postRequest
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(Request $request)
     {
         // dd($request);
-        // $request->validate([
-        //     'category_id' => 'required',
-        //     'title' => 'required',
-        //     'body' => 'required',
-        // ]);
+        $request->validate(
+            [
+                'category_id' => 'required',
+                'title' => ['required', 'unique:posts', 'max:255'],
+                'body' => 'required',
+            ],
+            //Custom errors
+            [
+                'category_id.required' => 'No ha seleccionado una categoría',
+                'title.unique' => 'El título ya está registrado',
+                'body.unique' => 'La descripción no puede quedar vacío',
+            ]
+        );
         // $imageName = time().'.'.$request->image->extension();  
             
         // $request->image->move(public_path('images'), $imageName);
@@ -99,20 +107,48 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
-
+        //Si no tiene el mismo nombre valida que no este repetido
+        if($post->title != $request->title){
+            $request->validate(
+                [
+                    'category_id' => 'required',
+                    'title' => ['required', 'unique:posts', 'max:255'],
+                    'body' => 'required',
+                ],
+                //Custom errors
+                [
+                    'category_id.required' => 'No ha seleccionado una categoría',
+                    'title.unique' => 'El título ya está registrado',
+                    'body.unique' => 'La descripción no puede quedar vacío',
+                ]
+            );
+        }
+        //No tiene el mismo nombre
+        else{
+            $request->validate(
+                [
+                    'category_id' => 'required',
+                    'body' => 'required',
+                ],
+                //Custom errors
+                [
+                    'category_id.required' => 'No ha seleccionado una categoría',
+                    'body.unique' => 'La descripción no puede quedar vacío',
+                ]
+            );
+        }
         // $post->update($request->all());
-
         if($request->file('file')){
             if($post->image){
+                //Si tiene una imagen guardada eliminalo
                 Storage::disk('public')->delete($post->image);
             }
-
             $post->image = $request->file('file')->store('posts', 'public');
             $post->save();
-        }
-        return redirect()->route('posts.edit',  $post->id);
+        } 
+        return redirect()->route('posts.edit',  $post->id)->with('status','Post editado correctamente');
     }
 
     /**

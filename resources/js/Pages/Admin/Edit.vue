@@ -27,7 +27,7 @@ import Welcome from '@/Jetstream/Welcome.vue';
         },
         methods:{
             submit(){
-                this.$inertia.post(this.route('posts.store'), this.form)
+                this.$inertia.put(this.route('posts.update', this.post.id), this.form)
             },
             removeImage: function (e) {
                 this.form.image = '';

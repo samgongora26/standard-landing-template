@@ -29,4 +29,19 @@ class Post extends FormRequest
             'body' => 'required',
         ];
     }
+
+    public function withValidator($validator){
+        $validator->after(function ($validator) {
+            if ($this->rules()) {
+                $validator->errors()->add('field', 'Something is wrong with this field!');
+            }
+        });
+    }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'The :attribute field can not be blank value',
+        ];
+    }
 }
