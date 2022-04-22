@@ -47,7 +47,11 @@ import { Inertia } from '@inertiajs/inertia';
                 <div class="md:grid md:grid-cols-3 md:gap-6">
                     <div class="md:col-span-1">
                         <div class="px-4 sm:px0">
-                            <h3 class="text-lg text-gray-900 ">Detalle del post</h3>
+                            <h3 class="text-lg text-gray-900 ">
+                                Detalle del post 
+                                <span v-if="this.post.category_id == 1"> de tours</span> 
+                                <span v-else> de servicios</span>
+                            </h3>
                             <p class="text-sm text-gray-600 ">{{ post.title }}</p>
                         </div>
                     </div>

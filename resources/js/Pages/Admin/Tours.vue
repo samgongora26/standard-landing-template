@@ -20,7 +20,7 @@
         },
         watch :{
             q: function (value){
-                this.$inertia.get(this.route('notes.index', {q: value}), {}, {preserveState: true})
+                this.$inertia.get(this.route('tours', {q: value}), {}, {preserveState: true})
             }
         }
     }

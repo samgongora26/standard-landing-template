@@ -13,9 +13,11 @@ class PageController extends Controller
     public function tours(Request $requests){
         //Load all the tours
         $posts = Post::orderBy('id', 'desc')
-            ->where('category_id', '=', "1")
+            ->where([
+                ['category_id', '=', "1"],
+                ['title', 'LIKE', "%$requests->q%"]
+            ])
             ->get();
-            // ->paginate(6)
         return Inertia::render('Admin/Tours', [
             'posts' => $posts
         ]);
@@ -30,13 +32,14 @@ class PageController extends Controller
     }
 
     //-------SERVICIOS--------
-    public function servicies(){
+    public function servicies(Request $request){
         //Load all the servicies
         $servicies_list = Post::orderBy('id', 'desc')
-            ->where('category_id', '=', "2")
+            ->where([
+                ['category_id', '=', "2"],
+                ['title', 'LIKE', "%$request->q%"]
+            ])
             ->get();
-            // ->paginate(6);
-        // dd($servicies_list);
         return Inertia::render('Admin/Servicies', [
             'posts' => $servicies_list
         ]);

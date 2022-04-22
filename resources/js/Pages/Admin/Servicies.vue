@@ -14,14 +14,13 @@ import Welcome from '@/Jetstream/Welcome.vue';
         data(){
             return {
                 q : '',
-                // post: this.tours,
             }
         },
-        // watch :{
-        //     q: function (value){
-        //         this.$inertia.get(this.route('notes.index', {q: value}), {}, {preserveState: true})
-        //     }
-        // }
+        watch :{
+            q: function (value){
+                this.$inertia.get(this.route('servicies', {q: value}), {}, {preserveState: true})
+            }
+        }
     }
 </script>
 
